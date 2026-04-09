@@ -40,7 +40,7 @@ Option 1 : Pour les développeurs (Source Python)
 Prérequis : Avoir Python 3 installé.
 
 Cloner le projet :
-git clone https://github.com/votre-pseudo/cowboy-maze.git
+git clone https://github.com/zedka450/cowboy-maze.git
 cd cowboy-maze
 
 Lancer le jeu :
@@ -58,7 +58,6 @@ Cowboy Maze.py : Le moteur de jeu principal et l'interface.
 
 save.json : Votre sauvegarde (score, inventaire, skins).
 
-cheat.py : (Optionnel) Script de test pour vérifier la robustesse de l'anti-cheat.
 
 Sécurité (Anti-Cheat)
 Le jeu intègre un système de contrôle de cohérence. Toute modification manuelle du score dans save.json sans mettre à jour la variable de contrôle interne entraînera une réinitialisation du score par le système de sécurité.
