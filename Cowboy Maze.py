@@ -228,18 +228,33 @@ while True:
         its = [
             {"n":"Joueur O","id":"O","t":"P","p":100},{"n":"Mur X","id":"X","t":"#","p":300},
             {"n":"Mur I","id":"I","t":"#","p":400},{"n":"Air .","id":".","t":"x","p":500},
-            {"n":"Base P","id":"P","t":"P","p":0},{"n":"Base M","id":"M","t":"M","p":0},
-            {"n":"Base #","id":"#","t":"#","p":0},{"n":"Base x","id":"x","t":"x","p":0}
+            {"n":"Base Zombie Enragé @","id":"@","t":"M","p":0}, {"n":"Zombie Z","id":"Z","t":"M","p":600},
+            {"n":"Base Joueur P","id":"P","t":"P","p":0},{"n":"Base Zombie M","id":"M","t":"M","p":0},
+            {"n":"Base Mur #","id":"#","t":"#","p":0},{"n":"Base Air x","id":"x","t":"x","p":0},
+            {"n":"Air [Vide]","id":"\u2800","t":"x","p":100}, {"n":"Mur e","id":"e","t":"#","p":500}
         ]
         while True:
-            screen("BOUTIQUE", [f"{i+1}. {it['n']} {'[E]' if D['skins'][it['t']]==it['id'] else '[P]' if it['id'] in D['inv'] else f'({it['p']} pts)'}" for i, it in enumerate(its)]+["[ESC]"])
-            sk = None
-            while not sk: sk = get_key(); time.sleep(0.01)
-            if sk == '\x1b': break
-            if sk.isdigit() and 0 < int(sk) <= len(its):
-                it = its[int(sk)-1]
-                if it['id'] in D['inv']: D['skins'][it['t']] = it['id']
-                elif D['full_score'] >= it['p']:
-                    D['full_score'] -= it['p']; D['inv'].append(it['id']); D['skins'][it['t']] = it['id']
+            screen("BOUTIQUE", [f"{i+1}. {it['n']} {'[E]' if D['skins'][it['t']]==it['id'] else '[P]' if it['id'] in D['inv'] else f'({it['p']} pts)'}" for i, it in enumerate(its)]+["[Entrez le numéro ou 'q' pour quitter]"])
+            
+            choix = input("Votre choix : ").strip().lower()
+            
+            if choix == 'q' or choix == '': 
+                break
+            
+            if choix.isdigit():
+                num = int(choix)
+                if 0 < num <= len(its):
+                    it = its[num-1]
+                    if it['id'] in D['inv']: 
+                        D['skins'][it['t']] = it['id']
+                    elif D['full_score'] >= it['p']:
+                        D['full_score'] -= it['p']
+                        D['inv'].append(it['id'])
+                        D['skins'][it['t']] = it['id']
+                        save()
+                    D["_fs_m"] = D["full_score"]
                     save()
-    elif k == 'q': sys.exit()
+                else:
+                    print("Ce numéro n'existe pas !")
+                    time.sleep(1)
+    elif k == 'q': sys.exit(0)
